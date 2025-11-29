@@ -32,7 +32,7 @@ export default function NewsletterPage() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/api/admin/newsletter-subscribers", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/newsletter-subscribers`, {
         headers: { 
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
@@ -50,7 +50,7 @@ export default function NewsletterPage() {
     setCampaignsLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/api/admin/newsletter-campaigns", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/newsletter-campaigns`, {
         headers: { 
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
@@ -82,7 +82,7 @@ export default function NewsletterPage() {
     
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/api/admin/newsletter-subscribers", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/newsletter-subscribers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export default function NewsletterPage() {
   async function handleDelete(id: number) {
     if (!confirm("Delete this subscriber?")) return;
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:8000/api/admin/newsletter-subscribers/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/newsletter-subscribers/${id}`, {
       method: "DELETE",
       headers: { 
         Authorization: `Bearer ${token}`,
@@ -233,7 +233,7 @@ export default function NewsletterPage() {
                   const token = localStorage.getItem("token");
                   await Promise.all(
                     ids.map(id =>
-                      fetch(`http://localhost:8000/api/admin/newsletter-subscribers/${id}`, {
+                      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/newsletter-subscribers/${id}`, {
                         method: "DELETE",
                         headers: { 
                           Authorization: `Bearer ${token}`,

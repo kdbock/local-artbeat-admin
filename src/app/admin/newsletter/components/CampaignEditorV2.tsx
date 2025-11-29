@@ -115,7 +115,7 @@ export default function CampaignEditorV2({
     formData.append("file", file);
     
     const token = localStorage.getItem("token");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/admin/upload`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/upload`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

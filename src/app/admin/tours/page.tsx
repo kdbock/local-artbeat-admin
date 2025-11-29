@@ -15,7 +15,7 @@ export default function ToursPage() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/api/tours", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tours`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -38,8 +38,8 @@ export default function ToursPage() {
       const token = localStorage.getItem("token");
       const isEdit = !!editing;
       const url = isEdit
-        ? `http://localhost:8000/api/admin/tours/${editing?.id}`
-        : "http://localhost:8000/api/admin/tours";
+        ? `${process.env.NEXT_PUBLIC_API_URL}/admin/tours/${editing?.id}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/admin/tours`;
       const method = isEdit ? "PUT" : "POST";
       const res = await fetch(url, {
         method,
@@ -65,7 +65,7 @@ export default function ToursPage() {
   async function handleDelete(id: number) {
     if (!confirm("Delete this tour?")) return;
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:8000/api/admin/tours/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/tours/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -114,7 +114,7 @@ export default function ToursPage() {
               if (!confirm("Delete selected tours?")) return;
               await Promise.all(
                 ids.map(id =>
-                  fetch(`http://localhost:8000/api/admin/tours/${id}`, {
+                  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/tours/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` },
                   })
@@ -124,7 +124,7 @@ export default function ToursPage() {
             } else if (action === "publish" || action === "draft") {
               await Promise.all(
                 ids.map(id =>
-                  fetch(`http://localhost:8000/api/admin/tours/${id}`, {
+                  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/tours/${id}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": "application/json",

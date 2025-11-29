@@ -26,7 +26,7 @@ export default function PostsPage() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/api/posts", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -49,8 +49,8 @@ export default function PostsPage() {
       const token = localStorage.getItem("token");
       const isEdit = !!editing;
       const url = isEdit
-        ? `http://localhost:8000/api/admin/posts/${editing?.id}`
-        : "http://localhost:8000/api/admin/posts";
+        ? `${process.env.NEXT_PUBLIC_API_URL}/admin/posts/${editing?.id}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/admin/posts`;
       const method = isEdit ? "PUT" : "POST";
       const res = await fetch(url, {
         method,
@@ -75,7 +75,7 @@ export default function PostsPage() {
   async function handleDelete(id: number) {
     if (!confirm("Delete this post?")) return;
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:8000/api/admin/posts/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/posts/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -125,7 +125,7 @@ export default function PostsPage() {
               const token = localStorage.getItem("token");
               await Promise.all(
                 ids.map(id =>
-                  fetch(`http://localhost:8000/api/admin/posts/${id}`, {
+                  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/posts/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` },
                   })
@@ -136,7 +136,7 @@ export default function PostsPage() {
               const token = localStorage.getItem("token");
               await Promise.all(
                 ids.map(id =>
-                  fetch(`http://localhost:8000/api/admin/posts/${id}`, {
+                  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/posts/${id}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": "application/json",
