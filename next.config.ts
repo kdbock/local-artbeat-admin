@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://kristykelly.com/localartbeat/api/:path*',
+        destination: 'https://kristykelly.com/api/:path*',
       },
     ];
   },
