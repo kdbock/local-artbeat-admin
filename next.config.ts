@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://kristykelly.com/api/:path*',
+        source: "/api/:path*",
+        destination: "https://kristykelly.com/api/:path*",
       },
     ];
   },
