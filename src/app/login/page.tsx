@@ -12,13 +12,24 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+      console.debug(`Logging in via API at ${API_URL}/login`);
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
+      const text = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // non-JSON response
+      }
+      if (!res.ok) {
+        const message = data?.message || text || 'Login failed';
+        throw new Error(`${res.status} - ${message}`);
+      }
       localStorage.setItem("token", data.token);
       router.push("/admin");
     } catch (err) {
