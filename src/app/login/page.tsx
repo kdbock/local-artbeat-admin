@@ -12,11 +12,14 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+      const rawUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+      // Normalize so we don't accidentally end up with // or /api/api
+      const API_URL = rawUrl.replace(/\/+$/, "")
+        .replace(/\/api$/, "") + "/api";
       console.debug(`Logging in via API at ${API_URL}/login`);
       const res = await fetch(`${API_URL}/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       const text = await res.text();
